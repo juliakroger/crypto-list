@@ -1,0 +1,29 @@
+@import "./spinner.scss";
+@import "./cards.scss";
+
+$white: #fff;
+$background: #070d12;
+$blue: #0396c5;
+
+html {
+  font-family: "Avenir Next", -apple-system, "Helvetica Neue", sans-serif;
+  background-color: $background;
+  color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+.go-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 35px;
+  height: 35px;
+  background-color: $blue;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 25px;
+  line-height: 40px;
+  display: flex;
+  justify-content: center;
+}
