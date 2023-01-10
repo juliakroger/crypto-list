@@ -1,14 +1,12 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const InfiniteScroll = ({ isLoading, onLoadMore, hasMore, children }) => {
   const loader = useRef(null);
 
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
-    if (target.isIntersecting) {
-      if (hasMore && !isLoading) {
-        onLoadMore();
-      }
+    if (target.isIntersecting && hasMore) {
+      onLoadMore();
     }
   }, []);
 
