@@ -1,17 +1,14 @@
-# Ava Labs Crypto List
+# Crypto List
 
 Cryptocurrency prices and charts, listed by market capitalization.
 
 This project is currently running at https://crypto-list.netlify.app/
 
 ## Available Scripts
-
 To run the project localy you need to run:
-
 ### `yarn`
 
 To setup and download dependencies.
-
 ### `yarn start`
 
 Runs the app in the development mode.
