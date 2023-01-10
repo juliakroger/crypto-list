@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const InfiniteScroll = ({ isLoading, onLoadMore, hasMore, children }) => {
+const InfiniteScroll = ({ onLoadMore, hasMore, children }) => {
   const loader = useRef(null);
 
   const handleObserver = useCallback((entries) => {

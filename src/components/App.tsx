@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import Cards from "@/components/Cards";
 import InfiniteScroll from "@/components/InfiniteScroll";
@@ -74,11 +74,7 @@ const App = () => {
 
   return (
     <div>
-      <InfiniteScroll
-        isLoading={isLoading || isRefreshing}
-        onLoadMore={loadMore}
-        hasMore={true}
-      >
+      <InfiniteScroll onLoadMore={loadMore} hasMore={true}>
         <Cards cards={data || []} />
         {isLoading ? <Spinner /> : null}
       </InfiniteScroll>
