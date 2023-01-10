@@ -1,5 +1,5 @@
 import axios from "axios";
-import { URL, ITEMS_PER_PAGE } from "./constants";
+import { URL, ITEMS_PER_PAGE } from "@/utils/constants";
 
 export const getMarketCap = async (page = 1, itensPerPage = ITEMS_PER_PAGE) => {
   const [response, error] = await axios

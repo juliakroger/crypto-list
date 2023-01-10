@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Spinner from "./components/Spinner";
-import Cards from "./components/Cards";
-import InfiniteScroll from "./components/InfiniteScroll";
-import { getMarketCap } from "./utils/query";
-import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "./utils/constants";
+import Spinner from "@/components/Spinner";
+import Cards from "@/components/Cards";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import { getMarketCap } from "@/utils/query";
+import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "@/utils/constants";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);

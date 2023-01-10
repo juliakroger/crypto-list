@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useState } from "react";
-import { DetailedChart } from "../Charts";
+import { DetailedChart } from "@/components/Charts";
 
 const Card = ({ card }) => {
   const [isOpen, setIsOpen] = useState(false);
