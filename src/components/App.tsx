@@ -4,6 +4,7 @@ import Cards from "@/components/Cards";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import { getMarketCap } from "@/utils/query";
 import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "@/utils/constants";
+import { ListOfCoins } from "@/utils/types";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,7 +12,7 @@ const App = () => {
   const [pageHidden, setPageHidden] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<ListOfCoins>();
 
   const getInitialData = async () => {
     const [res] = await getMarketCap(page);
@@ -73,15 +74,15 @@ const App = () => {
   };
 
   return (
-    <div>
-      <InfiniteScroll onLoadMore={loadMore} hasMore={true}>
-        <Cards cards={data || []} />
+    <InfiniteScroll onLoadMore={loadMore} hasMore={true}>
+      <>
+        <Cards cards={data} />
         {isLoading ? <Spinner /> : null}
-      </InfiniteScroll>
-      <div className="go-top" onClick={goTop}>
-        ☝️
-      </div>
-    </div>
+        <div className="go-top" onClick={goTop}>
+          ☝️
+        </div>
+      </>
+    </InfiniteScroll>
   );
 };
 

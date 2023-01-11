@@ -1,14 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-const InfiniteScroll = ({ onLoadMore, hasMore, children }) => {
+interface Props {
+  onLoadMore: () => void;
+  hasMore: boolean;
+  children: JSX.Element;
+}
+
+const InfiniteScroll = ({ onLoadMore, hasMore, children }: Props) => {
   const loader = useRef(null);
 
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    if (target.isIntersecting && hasMore) {
-      onLoadMore();
-    }
-  }, []);
+  const handleObserver = useCallback(
+    (entries: { isIntersecting: boolean }[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasMore) {
+        onLoadMore();
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const option = {

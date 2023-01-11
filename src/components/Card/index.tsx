@@ -1,20 +1,19 @@
 import moment from "moment";
 import { useState } from "react";
 import { DetailedChart } from "@/components/Charts";
+import { CoinData } from "@/utils/types";
 
-const Card = ({ card }) => {
+const Card = ({
+  id,
+  image,
+  symbol,
+  name,
+  current_price,
+  price_change_percentage_24h,
+  total_volume,
+  sparkline_in_7d,
+}: CoinData) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const {
-    id,
-    image,
-    symbol,
-    name,
-    current_price,
-    price_change_percentage_24h,
-    total_volume,
-    sparkline_in_7d,
-  } = card;
 
   const imageId = image.split("/coins/images/")[1].split("/")[0];
   const miniChart = `https://www.coingecko.com/coins/${imageId}/sparkline`;
