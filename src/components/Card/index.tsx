@@ -2,6 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 import { DetailedChart } from "@/components/Charts";
 import { CoinData } from "@/utils/types";
+import { parseClassName } from "@/utils/parseClassName";
 
 const Card = ({
   id,
@@ -19,46 +20,52 @@ const Card = ({
   const miniChart = `https://www.coingecko.com/coins/${imageId}/sparkline`;
 
   return (
-    <div className="card">
+    <div className="w-full m-2 mr-10">
       <tr
-        className={`card--header ${isOpen ? "card--header-open" : ""}`}
+        className={parseClassName([
+          "cursor-pointer w-full flex items-center justify-between p-4",
+          isOpen
+            ? "rounded-t bg-card-open-background"
+            : "rounded bg-card-background",
+        ])}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <td>
+        <td className="py-4">
           <img src={image} alt={id} width="20px" />
         </td>
 
-        <td>
+        <td className="py-4">
           <div>{symbol?.toUpperCase()}</div>
-          <div className="label">{name}</div>
+          <div className="text-xs text-zinc-300">{name}</div>
         </td>
 
-        <td>
+        <td className="py-4">
           <img src={miniChart} alt="mini-chart" width="100px" height="37px" />
         </td>
 
-        <td className="align-left">
+        <td className="py-4flex flex-col items-end">
           <div>${total_volume}</div>
-          <div className="label">24h volume</div>
+          <div className="text-xs text-zinc-300">24h volume</div>
         </td>
 
-        <td className="align-left">
+        <td className="py-4flex flex-col items-end">
           <div>$ {current_price?.toFixed(2)}</div>
           <div
-            className={`label ${
+            className={parseClassName([
+              "text-xs",
               price_change_percentage_24h !== 0
                 ? price_change_percentage_24h > 0
-                  ? "label--positive-value"
-                  : "label--negative-value"
-                : ""
-            }`}
+                  ? "text-green-400"
+                  : "text-red-400"
+                : "",
+            ])}
           >
             {price_change_percentage_24h}%
           </div>
         </td>
       </tr>
       {isOpen ? (
-        <div className="card--more-info">
+        <div className="w-full bg-card-open-background border-t border-gray-600 rounded-b">
           <DetailedChart
             data={sparkline_in_7d?.price?.map((price, i) => ({
               date: moment()
