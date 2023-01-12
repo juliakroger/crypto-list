@@ -3,9 +3,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#000000",
-        "card-background": "#141d26",
-        "card-open-background": "#293542",
+        background: "#191C1E",
+        "card-background": "#000000",
+        "card-open-background": "#262A2F",
       },
     },
   },
