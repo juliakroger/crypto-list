@@ -60,7 +60,7 @@ export const DetailedChart = ({ data }: Props) => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div className="flex justify-center">
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
