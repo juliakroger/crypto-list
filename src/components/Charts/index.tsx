@@ -1,7 +1,11 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-export const DetailedChart = ({ data }) => {
+interface Props {
+  data: { date: string; value: string; y: number }[];
+}
+
+export const DetailedChart = ({ data }: Props) => {
   const options = {
     title: {
       text: "",
