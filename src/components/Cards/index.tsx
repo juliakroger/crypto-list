@@ -9,18 +9,21 @@ const Cards = ({ cards }: Props) => {
   return (
     <table className="w-full mr-10 min-w-[650px]">
       {cards?.map(
-        ({
-          id,
-          image,
-          symbol,
-          name,
-          current_price,
-          price_change_percentage_24h,
-          total_volume,
-          sparkline_in_7d,
-        }) => (
+        (
+          {
+            id,
+            image,
+            symbol,
+            name,
+            current_price,
+            price_change_percentage_24h,
+            total_volume,
+            sparkline_in_7d,
+          },
+          index
+        ) => (
           <Card
-            key={id}
+            key={index}
             id={id}
             image={image}
             symbol={symbol}
