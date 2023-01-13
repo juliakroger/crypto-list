@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import Cards from "@/components/Cards";
+import Header from "@/components/Header";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import { getMarketCap } from "@/utils/query";
 import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "@/utils/constants";
@@ -74,15 +75,18 @@ const App = () => {
   };
 
   return (
-    <InfiniteScroll onLoadMore={loadMore} hasMore={true}>
-      <>
-        <Cards cards={data} />
-        {isLoading ? <Spinner /> : null}
-        <div className="go-top" onClick={goTop}>
-          ☝️
-        </div>
-      </>
-    </InfiniteScroll>
+    <div className="w-screen lg:p-14">
+      <Header />
+      <InfiniteScroll onLoadMore={loadMore} hasMore={true}>
+        <>
+          <Cards cards={data} />
+          {isLoading ? <Spinner /> : null}
+          <div className="go-top" onClick={goTop}>
+            ☝️
+          </div>
+        </>
+      </InfiniteScroll>
+    </div>
   );
 };
 
