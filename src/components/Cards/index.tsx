@@ -7,35 +7,11 @@ interface Props {
 
 const Cards = ({ cards }: Props) => {
   return (
-    <table className="w-full mr-10 min-w-[650px]">
-      {cards?.map(
-        (
-          {
-            id,
-            image,
-            symbol,
-            name,
-            current_price,
-            price_change_percentage_24h,
-            total_volume,
-            sparkline_in_7d,
-          },
-          index
-        ) => (
-          <Card
-            key={index}
-            id={id}
-            image={image}
-            symbol={symbol}
-            name={name}
-            current_price={current_price}
-            price_change_percentage_24h={price_change_percentage_24h}
-            total_volume={total_volume}
-            sparkline_in_7d={sparkline_in_7d}
-          />
-        )
-      )}
-    </table>
+    <div className="w-full pt-10 px-20">
+      {cards?.map((data, index) => (
+        <Card key={index} {...data} />
+      ))}
+    </div>
   );
 };
 
