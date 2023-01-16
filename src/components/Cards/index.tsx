@@ -9,7 +9,12 @@ const Cards = ({ cards }: Props) => {
   return (
     <div className="w-full pt-10 px-20">
       {cards?.map((data, index) => (
-        <Card key={index} {...data} />
+        <Card
+          key={index}
+          {...data}
+          isFavorite={false}
+          setFavorite={(id: string) => {}}
+        />
       ))}
     </div>
   );

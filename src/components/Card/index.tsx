@@ -4,6 +4,12 @@ import { DetailedChart } from "@/components/Charts";
 import { CoinData } from "@/utils/types";
 import { parseClassName } from "@/utils/parseClassName";
 import { formatDollar } from "@/utils/formatDollar";
+import Star from "@/images/Star";
+
+interface Props extends CoinData {
+  setFavorite: (id: string) => void;
+  isFavorite: boolean;
+}
 
 const Card = ({
   id,
@@ -14,7 +20,9 @@ const Card = ({
   price_change_percentage_24h,
   total_volume,
   sparkline_in_7d,
-}: CoinData) => {
+  setFavorite,
+  isFavorite,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const imageId = image.split("/coins/images/")[1].split("/")[0];
@@ -25,6 +33,19 @@ const Card = ({
       id: "title",
       content: (
         <>
+          <button
+            className="mr-4 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFavorite(id);
+            }}
+          >
+            <Star
+              className={
+                isFavorite ? "w-4 h-4 fill-yellow-400" : "w-4 h-4 fill-zinc-600"
+              }
+            />
+          </button>
           <img src={image} alt={id} width="20px" />
           <div className="mx-2">{name}</div>
           <div className="text-xs text-zinc-400">{symbol?.toUpperCase()}</div>
