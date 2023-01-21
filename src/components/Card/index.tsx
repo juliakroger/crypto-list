@@ -99,8 +99,8 @@ const Card = ({
         className={parseClassName([
           "cursor-pointer w-full flex items-center justify-between px-6",
           isOpen
-            ? "rounded-t-xl bg-card-background/70"
-            : "rounded-xl bg-card-background hover:bg-card-background/80",
+            ? "rounded-t-xl bg-gray-13"
+            : "rounded-xl bg-gray-12 hover:bg-gray-13",
         ])}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -121,7 +121,7 @@ const Card = ({
       </div>
 
       {isOpen ? (
-        <div className="w-full bg-card-background/70 border-t border-gray-600 rounded-b-xl">
+        <div className="w-full bg-gray-13 border-t border-zinc-600 rounded-b-xl">
           <DetailedChart
             data={sparkline_in_7d?.price?.map((price, i) => ({
               date: moment()

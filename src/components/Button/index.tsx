@@ -1,8 +1,9 @@
 import React from "react";
 
 const BUTTON_BASE_SIZE = "text-sm px-3 py-1.5";
+
 const BUTTON_TYPE_STYLES = {
-  base: "bg-black text-white",
+  base: "bg-gray-13 text-white",
   active: "bg-active-blue text-white",
 };
 
