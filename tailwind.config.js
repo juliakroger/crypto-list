@@ -4,9 +4,22 @@ module.exports = {
     extend: {
       colors: {
         background: "#191C1E",
-        "card-background": "#000000",
-        "card-open-background": "#262A2F",
         "active-blue": "#0F8EFF",
+        gray: {
+          1: "#C6CBD2",
+          2: "#A4ADB6",
+          3: "#99A2AD",
+          4: "#6D7988",
+          5: "#5B6571",
+          6: "#49515B",
+          7: "#363D44",
+          8: "#363D44",
+          9: "#24282D",
+          10: "#262A2F",
+          11: "#24282D",
+          12: "#1B1E22",
+          13: "#121417",
+        },
       },
     },
     borderRadius: {
