@@ -75,6 +75,7 @@ const useGetCoinsMarketList = () => {
       ? favorites.filter((item) => item !== id)
       : [...favorites, id];
 
+    setFavorites(newFavorites);
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
   };
 
