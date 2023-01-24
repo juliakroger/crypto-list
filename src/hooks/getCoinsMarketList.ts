@@ -40,11 +40,25 @@ const useGetCoinsMarketList = () => {
     if (items) setFavorites(JSON.parse(items) || []);
   }, []);
 
-  const handleVisibilityChange = () => {
-    setPageHidden(document.hidden);
-  };
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setPageHidden(document.hidden);
+    };
 
-  document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange,
+      false
+    );
+
+    return () => {
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange,
+        false
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (pageHidden) {
