@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Chevron from "@/images/Chevron";
 import { parseClassName } from "@/utils/parseClassName";
 import Button from "@/components/Button";
@@ -23,6 +23,26 @@ const FilterOptions = ({
 }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const dropdownMenuContainer = useRef<HTMLElement>();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuOpen &&
+        dropdownMenuContainer.current &&
+        !dropdownMenuContainer.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownMenuContainer, menuOpen]);
+
   const filterOptionsContentClass = parseClassName([
     "absolute",
     "min-w-[200px]",
@@ -42,7 +62,7 @@ const FilterOptions = ({
   ]);
 
   return (
-    <div className="c_filter-options relative">
+    <div className="relative">
       <div className="mb-1 flex items-center">
         <p className="text-xs font-bold uppercase text-zinc-200 mr-2">
           {label}
@@ -68,11 +88,12 @@ const FilterOptions = ({
         ) : null}
       </div>
 
-      <div className={filterOptionsContentClass}>
+      <div className={filterOptionsContentClass} ref={dropdownMenuContainer}>
         {menuOpen ? (
           <div className="relative overflow-y-auto max-h-40">
             {filterOptions?.map(({ id, name }) => (
               <button
+                key={id}
                 onClick={() => {
                   setOptionCallback(id);
                   setMenuOpen(false);
