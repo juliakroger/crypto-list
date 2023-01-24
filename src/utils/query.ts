@@ -39,3 +39,12 @@ export const getMarketCap = async ({
 
   return [response, error];
 };
+
+export const getCategoriesList = async () => {
+  const [response, error] = await axios
+    .get("/coins/categories/list", config)
+    .then((res) => [res.data, null])
+    .catch((err) => [null, err]);
+
+  return [response, error];
+};

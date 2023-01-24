@@ -6,11 +6,12 @@ import Button from "@/components/Button";
 interface Props {
   label: string;
   filterOptions: {
-    label: string;
+    name: string;
     id: string;
   }[];
-  selectedOption: string;
+  selectedOption?: string;
   setOptionCallback: (op?: string) => void;
+  includeClear?: boolean;
 }
 
 const FilterOptions = ({
@@ -18,10 +19,9 @@ const FilterOptions = ({
   filterOptions,
   selectedOption,
   setOptionCallback,
+  includeClear = false,
 }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const includeClear = typeof selectedOption !== "undefined";
 
   const filterOptionsContentClass = parseClassName([
     "absolute",
@@ -56,7 +56,7 @@ const FilterOptions = ({
           />
         </Button>
 
-        {includeClear ? (
+        {includeClear && selectedOption ? (
           <Button
             onClick={(e) => {
               e.preventDefault();
@@ -71,7 +71,7 @@ const FilterOptions = ({
       <div className={filterOptionsContentClass}>
         {menuOpen ? (
           <div className="relative overflow-y-auto max-h-40">
-            {filterOptions?.map(({ id, label }) => (
+            {filterOptions?.map(({ id, name }) => (
               <button
                 onClick={() => {
                   setOptionCallback(id);
@@ -80,10 +80,10 @@ const FilterOptions = ({
                 className={parseClassName([
                   "cursor-pointer w-full",
                   "flex p-1 px-2 text-sm hover:bg-gray-12",
-                  selectedOption === id ? "hover:bg-gray-12" : "bg-gray-10",
+                  selectedOption === name ? "bg-gray-12" : "bg-gray-10",
                 ])}
               >
-                {label}
+                {name}
               </button>
             ))}
           </div>

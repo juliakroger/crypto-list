@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@/components/Button";
 
 interface Props {
-  selectOptions: { id: string; text: string }[];
+  selectOptions: { id: string; name: string }[];
   selectOption: (id: string) => void;
   selectedOption: string;
 }
@@ -18,7 +18,7 @@ const GroupButton = ({
         <Button
           key={i}
           onClick={() => selectOption(option.id)}
-          text={option.text}
+          text={option.name}
           buttonType={selectedOption === option.id ? "active" : "base"}
           customClasses="first:rounded-l-xl last:rounded-r-xl"
         />
