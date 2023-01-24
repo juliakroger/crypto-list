@@ -25,7 +25,7 @@ const Card = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const imageId = image.split("/coins/images/")[1].split("/")[0];
+  const imageId = image?.split("/coins/images/")?.[1].split("/")[0];
   const miniChart = `https://www.coingecko.com/coins/${imageId}/sparkline`;
 
   const columns = [
