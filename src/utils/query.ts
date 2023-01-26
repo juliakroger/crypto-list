@@ -56,3 +56,12 @@ export const getCategoriesList = async () => {
 
   return [response, error];
 };
+
+export const getCoinsList = async () => {
+  const [response, error] = await axios
+    .get(`${URL}/coins/list`, config)
+    .then((res) => [res.data, null])
+    .catch((err) => [null, err]);
+
+  return [response, error];
+};
