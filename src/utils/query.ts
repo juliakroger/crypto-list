@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { URL, ITEMS_PER_PAGE } from "@/utils/constants";
+import { filterEmptyParams } from "./filterEmptyParams";
 
 axios.defaults.baseURL = URL;
 
@@ -16,21 +17,26 @@ interface GetMarketCapProps {
   ids?: string[];
   vs_currency?: string;
   order?: string;
+  category?: string;
 }
 
 export const getMarketCap = async ({
   page = 1,
   itensPerPage = ITEMS_PER_PAGE,
   vs_currency = "usd",
+  category,
   order = "gecko_desc",
 }: GetMarketCapProps) => {
-  const params = new URLSearchParams({
-    page: page.toString(),
-    itensPerPage: itensPerPage.toString(),
-    vs_currency,
-    order,
-    sparkline: "true",
-  });
+  const params = new URLSearchParams(
+    filterEmptyParams({
+      page: page.toString(),
+      itensPerPage: itensPerPage.toString(),
+      vs_currency,
+      category,
+      order,
+      sparkline: "true",
+    })
+  );
 
   const [response, error] = await axios
     .get("/coins/markets", { ...config, params })

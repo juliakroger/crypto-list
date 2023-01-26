@@ -3,14 +3,8 @@ import Cards from "@/components/Cards";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import GroupButton from "@/components/GroupButton";
 import useGetCoinsMarketList from "@/hooks/getCoinsMarketList";
-import {
-  CURRENCIES,
-  GROUPS,
-  GROUPS_LIST,
-  ORDER,
-  PRICE_CHANGE,
-} from "@/utils/constants";
-import { useEffect, useMemo, useState } from "react";
+import { CURRENCIES, GROUPS_LIST, ORDER } from "@/utils/constants";
+import { useEffect, useState } from "react";
 import FilterOptions from "@/components/FilterOptions";
 import { getCategoriesList } from "@/utils/query";
 
@@ -19,7 +13,6 @@ interface FiltersProps {
   category?: string;
   currency?: string;
   order?: string;
-  priceChange?: string;
 }
 
 interface ListProps {
@@ -29,8 +22,15 @@ interface ListProps {
 
 const Overview = () => {
   const [CATEGORIES, setCategories] = useState([]);
-  const { isLoading, data, favorites, loadMore, saveFavorites } =
-    useGetCoinsMarketList();
+  const {
+    isLoading,
+    data,
+    favorites,
+    loadMore,
+    saveFavorites,
+    filters,
+    setFilters,
+  } = useGetCoinsMarketList();
 
   const getCategories = async () => {
     const [res] = await getCategoriesList();
@@ -45,14 +45,6 @@ const Overview = () => {
   useEffect(() => {
     getCategories();
   }, []);
-
-  const [filters, setFilters] = useState<FiltersProps>({
-    groupBy: GROUPS.ALL,
-    category: undefined,
-    currency: undefined,
-    order: undefined,
-    priceChange: undefined,
-  });
 
   const goTop = () => {
     window.scrollTo({
@@ -100,14 +92,6 @@ const Overview = () => {
               setFilters({ ...filters, order: value })
             }
           />
-          <FilterOptions
-            label="Price Change"
-            filterOptions={PRICE_CHANGE}
-            selectedOption={getLabel(PRICE_CHANGE, filters.priceChange)}
-            setOptionCallback={(value?: string) =>
-              setFilters({ ...filters, priceChange: value })
-            }
-          />
         </div>
       </div>
 
@@ -121,6 +105,7 @@ const Overview = () => {
             cards={data}
             favorites={favorites}
             saveFavorites={saveFavorites}
+            currency={filters.currency}
           />
           {isLoading ? <Spinner /> : null}
           <div className="go-top" onClick={goTop}>

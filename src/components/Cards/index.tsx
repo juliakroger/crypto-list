@@ -5,17 +5,19 @@ interface Props {
   cards: ListOfCoins;
   favorites: string[];
   saveFavorites: (id: string) => void;
+  currency: string;
 }
 
-const Cards = ({ cards, saveFavorites, favorites }: Props) => {
+const Cards = ({ cards, saveFavorites, favorites, currency }: Props) => {
   return (
     <div>
       {cards?.map((data, index) => (
         <Card
           key={index}
-          {...data}
           isFavorite={favorites.includes(data.id)}
           setFavorite={saveFavorites}
+          currency={currency}
+          {...data}
         />
       ))}
     </div>

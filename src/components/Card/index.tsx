@@ -9,6 +9,7 @@ import Star from "@/images/Star";
 interface Props extends CoinData {
   setFavorite: (id: string) => void;
   isFavorite: boolean;
+  currency: string;
 }
 
 const Card = ({
@@ -22,10 +23,11 @@ const Card = ({
   sparkline_in_7d,
   setFavorite,
   isFavorite,
+  currency,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const imageId = image?.split("/coins/images/")?.[1].split("/")[0];
+  const imageId = image?.split("/coins/images/")?.[1]?.split("/")?.[0];
   const miniChart = `https://www.coingecko.com/coins/${imageId}/sparkline`;
 
   const columns = [
@@ -62,7 +64,7 @@ const Card = ({
       id: "volume",
       content: (
         <>
-          <div>{formatDollar(total_volume)}</div>
+          <div>{formatDollar({ value: total_volume, currency })}</div>
           <div className="text-xs text-zinc-300">24h volume</div>
         </>
       ),
@@ -73,7 +75,9 @@ const Card = ({
       id: "price",
       content: (
         <>
-          <div>{formatDollar(current_price, 2)}</div>
+          <div>
+            {formatDollar({ value: current_price, digits: 2, currency })}
+          </div>
           <div
             className={parseClassName([
               "text-xs",

@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { ListOfCoins } from "@/utils/types";
 import { getMarketCap } from "@/utils/query";
 import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "@/utils/constants";
+import { GROUPS } from "@/utils/constants";
 
 const FAVORITES_KEY = "crypto-list-favorites";
+
+interface FiltersProps {
+  groupBy: string;
+  category?: string;
+  currency: string;
+  order: string;
+}
 
 const useGetCoinsMarketList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,9 +20,21 @@ const useGetCoinsMarketList = () => {
   const [page, setPage] = useState(1);
   const [pageHidden, setPageHidden] = useState(false);
 
+  const [filters, setFilters] = useState<FiltersProps>({
+    groupBy: GROUPS.ALL,
+    category: undefined,
+    currency: "usd",
+    order: "gecko_desc",
+  });
+
   const getInitialData = async () => {
     setIsLoading(true);
-    const [res] = await getMarketCap({ page: 1 });
+    const [res] = await getMarketCap({
+      page: 1,
+      vs_currency: filters.currency,
+      category: filters.category,
+      order: filters.order,
+    });
     setData(res);
     setIsLoading(false);
   };
@@ -22,7 +42,12 @@ const useGetCoinsMarketList = () => {
   const loadMore = async () => {
     setIsLoading(true);
     const newPage = page + 1;
-    const [res] = await getMarketCap({ page: newPage });
+    const [res] = await getMarketCap({
+      page: newPage,
+      vs_currency: filters.currency,
+      category: filters.category,
+      order: filters.order,
+    });
 
     if (res) {
       setPage(newPage);
@@ -33,7 +58,7 @@ const useGetCoinsMarketList = () => {
 
   useEffect(() => {
     getInitialData();
-  }, []);
+  }, [filters]);
 
   useEffect(() => {
     const items = localStorage.getItem(FAVORITES_KEY);
@@ -77,6 +102,9 @@ const useGetCoinsMarketList = () => {
         const [res] = await getMarketCap({
           page: 1,
           itensPerPage: page * ITEMS_PER_PAGE,
+          vs_currency: filters.currency,
+          category: filters.category,
+          order: filters.order,
         });
         setData(res);
       }, REFRESH_INTERVAL_SECONDS * 1000);
@@ -99,6 +127,8 @@ const useGetCoinsMarketList = () => {
     favorites,
     loadMore,
     saveFavorites,
+    filters,
+    setFilters,
   };
 };
 

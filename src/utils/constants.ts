@@ -28,7 +28,7 @@ export const CURRENCIES = [
 export const ORDER = [
   {
     // gecko_asc, gecko_desc
-    id: "gecko_asc",
+    id: "gecko_desc",
     name: "Default",
   },
   {
@@ -45,36 +45,5 @@ export const ORDER = [
     // id_asc, id_desc
     id: "id_asc",
     name: "Id",
-  },
-];
-
-export const PRICE_CHANGE = [
-  {
-    id: "1h",
-    name: "1 hour",
-  },
-  {
-    id: "24h",
-    name: "24 hours",
-  },
-  {
-    id: "7d",
-    name: "One Week",
-  },
-  {
-    id: "14d",
-    name: "Two Weeks",
-  },
-  {
-    id: "30d",
-    name: "One Month",
-  },
-  {
-    id: "200d",
-    name: "200 days",
-  },
-  {
-    id: "1y",
-    name: "One year",
   },
 ];
