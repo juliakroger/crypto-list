@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ListOfCoins } from "@/utils/types";
 import { getMarketCap } from "@/utils/query";
 import { REFRESH_INTERVAL_SECONDS, ITEMS_PER_PAGE } from "@/utils/constants";
@@ -27,21 +27,28 @@ const useGetCoinsMarketList = () => {
     order: "gecko_desc",
   });
 
-  const getInitialData = async () => {
+  const getInitialData = useCallback(async () => {
     setIsLoading(true);
+
     const [res] = await getMarketCap({
       page: 1,
-      itensPerPage: favorites.length,
-      ids: favorites.join(","),
+      itensPerPage:
+        filters.groupBy === GROUPS.FAVORITES
+          ? favorites.length
+          : ITEMS_PER_PAGE,
+      ids:
+        filters.groupBy === GROUPS.FAVORITES ? favorites.join(",") : undefined,
       vs_currency: filters.currency,
       category: filters.category,
       order: filters.order,
     });
     setData(res);
     setIsLoading(false);
-  };
+  }, [filters]);
 
-  const loadMore = async () => {
+  const loadMore = useCallback(async () => {
+    if (filters.groupBy === GROUPS.FAVORITES) return;
+
     setIsLoading(true);
     const newPage = page + 1;
     const [res] = await getMarketCap({
@@ -56,7 +63,7 @@ const useGetCoinsMarketList = () => {
       setData((prev) => [...(prev || []), ...res]);
       setIsLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     getInitialData();
