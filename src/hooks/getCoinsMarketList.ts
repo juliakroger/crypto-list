@@ -9,8 +9,8 @@ const FAVORITES_KEY = "crypto-list-favorites";
 interface FiltersProps {
   groupBy: string;
   category?: string;
-  currency: string;
-  order: string;
+  currency?: string;
+  order?: string;
 }
 
 const useGetCoinsMarketList = () => {

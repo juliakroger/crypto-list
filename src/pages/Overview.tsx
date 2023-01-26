@@ -8,13 +8,6 @@ import { useEffect, useState } from "react";
 import FilterOptions from "@/components/FilterOptions";
 import { getCategoriesList } from "@/utils/query";
 
-interface FiltersProps {
-  groupBy: string;
-  category?: string;
-  currency?: string;
-  order?: string;
-}
-
 interface ListProps {
   id: string;
   name: string;
@@ -105,7 +98,7 @@ const Overview = () => {
             cards={data}
             favorites={favorites}
             saveFavorites={saveFavorites}
-            currency={filters.currency}
+            currency={filters.currency || ""}
           />
           {isLoading ? <Spinner /> : null}
           <div className="go-top" onClick={goTop}>
