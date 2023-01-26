@@ -31,6 +31,8 @@ const useGetCoinsMarketList = () => {
     setIsLoading(true);
     const [res] = await getMarketCap({
       page: 1,
+      itensPerPage: favorites.length,
+      ids: favorites.join(","),
       vs_currency: filters.currency,
       category: filters.category,
       order: filters.order,
@@ -102,6 +104,7 @@ const useGetCoinsMarketList = () => {
         const [res] = await getMarketCap({
           page: 1,
           itensPerPage: page * ITEMS_PER_PAGE,
+          ids: favorites.join(","),
           vs_currency: filters.currency,
           category: filters.category,
           order: filters.order,
@@ -122,10 +125,10 @@ const useGetCoinsMarketList = () => {
   };
 
   return {
-    isLoading,
+    isLoading: isLoading && filters.groupBy !== GROUPS.FAVORITES,
     data,
     favorites,
-    loadMore,
+    loadMore: filters.groupBy === GROUPS.FAVORITES ? () => {} : loadMore,
     saveFavorites,
     filters,
     setFilters,

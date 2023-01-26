@@ -14,7 +14,7 @@ const config: AxiosRequestConfig = {
 interface GetMarketCapProps {
   page: number;
   itensPerPage?: number;
-  ids?: string[];
+  ids?: string;
   vs_currency?: string;
   order?: string;
   category?: string;
@@ -25,6 +25,7 @@ export const getMarketCap = async ({
   itensPerPage = ITEMS_PER_PAGE,
   vs_currency = "usd",
   category,
+  ids,
   order = "gecko_desc",
 }: GetMarketCapProps) => {
   const params = new URLSearchParams(
@@ -33,6 +34,7 @@ export const getMarketCap = async ({
       itensPerPage: itensPerPage.toString(),
       vs_currency,
       category,
+      ids,
       order,
       sparkline: "true",
     })
