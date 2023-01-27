@@ -4,7 +4,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import GroupButton from "@/components/GroupButton";
 import useGetCoinsMarketList from "@/hooks/getCoinsMarketList";
 import { CURRENCIES, GROUPS_LIST, ORDER } from "@/utils/constants";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import FilterOptions from "@/components/FilterOptions";
 import { getCategoriesList } from "@/utils/query";
 
@@ -14,7 +14,6 @@ interface ListProps {
 }
 
 const Overview = () => {
-  const [CATEGORIES, setCategories] = useState([]);
   const {
     isLoading,
     data,
@@ -23,21 +22,20 @@ const Overview = () => {
     saveFavorites,
     filters,
     setFilters,
+    hasMore,
   } = useGetCoinsMarketList();
 
-  const getCategories = async () => {
-    const [res] = await getCategoriesList();
-    setCategories(
-      res?.map((category: { category_id: string; name: string }) => ({
+  const { data: categories } = getCategoriesList();
+
+  const CATEGORIES = useMemo(
+    () =>
+      categories?.map((category: { category_id: string; name: string }) => ({
         id: category.category_id,
         name: category.name,
-      })) || []
-    );
-  };
+      })) || [],
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+    [categories]
+  );
 
   const goTop = () => {
     window.scrollTo({
@@ -68,6 +66,7 @@ const Overview = () => {
             setOptionCallback={(value?: string) =>
               setFilters({ ...filters, category: value })
             }
+            includeClear
           />
           <FilterOptions
             label="Currencies"
@@ -88,11 +87,7 @@ const Overview = () => {
         </div>
       </div>
 
-      <InfiniteScroll
-        onLoadMore={loadMore}
-        hasMore={true}
-        isLoading={isLoading}
-      >
+      <InfiniteScroll onLoadMore={loadMore} hasMore={hasMore}>
         <div className="px-20">
           <Cards
             cards={data}

@@ -1,39 +1,30 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface Props {
   onLoadMore: () => void;
   hasMore: boolean;
-  isLoading: boolean;
   children: JSX.Element;
 }
 
-const InfiniteScroll = ({
-  onLoadMore,
-  hasMore,
-  isLoading,
-  children,
-}: Props) => {
+const InfiniteScroll = ({ onLoadMore, hasMore, children }: Props) => {
   const loader = useRef(null);
 
-  const handleObserver = useCallback(
-    (entries: { isIntersecting: boolean }[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && hasMore && !isLoading) {
-        onLoadMore();
-      }
-    },
-    [isLoading, hasMore]
-  );
-
   useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 0,
+    let fetching = false;
+    const handleScroll = async (e) => {
+      const { scrollHeight, scrollTop, clientHeight } =
+        e.target.scrollingElement;
+      if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.2) {
+        fetching = true;
+        if (hasMore) await onLoadMore();
+        fetching = false;
+      }
     };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (loader.current) observer.observe(loader.current);
-  }, [handleObserver]);
+    document.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, [onLoadMore, hasMore]);
 
   return (
     <div>
