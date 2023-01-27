@@ -7,6 +7,9 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Overview from "@/pages/Overview";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const router = createBrowserRouter(
@@ -23,10 +26,12 @@ const App = () => {
   );
 
   return (
-    <div className="w-screen lg:p-14">
-      <Header />
-      <RouterProvider router={router} />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="w-screen lg:p-14">
+        <Header />
+        <RouterProvider router={router} />
+      </div>
+    </QueryClientProvider>
   );
 };
 
