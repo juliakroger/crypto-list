@@ -1,3 +1,13 @@
+import { NavLink } from "react-router-dom";
+import { parseClassName } from "@/utils/parseClassName";
+
+const ROUTES = [
+  { title: "Overview", path: "/" },
+  { title: "Trading", path: "/trading" },
+  { title: "Market", path: "/market" },
+  { title: "Scanner", path: "/scanner" },
+];
+
 const Header = () => {
   return (
     <div className="w-full flex items-center justify-between">
@@ -9,18 +19,26 @@ const Header = () => {
         />
       </div>
 
-      <div className="flex text-sm">
-        {/* <div>Overview</div> */}
-        {/* <div>Following</div> */}
-        {/* <div>Portfolio</div> */}
-        {/* <div>News</div> */}
-        {/* <div>Scanner</div> */}
+      <div className="flex items-center text-sm gap-2">
+        {ROUTES.map(({ title, path }) => (
+          <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+              parseClassName([
+                "p-1 px-3 font-medium",
+                isActive
+                  ? "bg-active-blue rounded-xl text-black"
+                  : "text-white",
+              ])
+            }
+          >
+            {title}
+          </NavLink>
+        ))}
       </div>
 
-      <div>
-        {/* <div>notifications</div> */}
-        {/* <div>user logo</div> */}
-      </div>
+      <div></div>
     </div>
   );
 };
